@@ -8,265 +8,96 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
-/* ════════ Theme Definitions ════════ */
-:root,[data-theme="light"]{
-  --bg:#f4f5f7;--s1:#ffffff;--s2:#eef0f4;--bd:#d5d8e0;
-  --t1:#1a1c28;--t2:#5a5e72;--t3:#9094a6;
-  --pos:#00a88a;--neg:#e05050;
-  --rev:#00a88a;--rev-d:rgba(0,168,138,.07);--rev-b:rgba(0,168,138,.18);
-  --cost:#e05050;--cost-d:rgba(224,80,80,.07);--cost-b:rgba(224,80,80,.18);
-  --grs:#c8a000;--grs-d:rgba(200,160,0,.07);
-  --op:#d07020;--op-d:rgba(208,112,32,.07);
-  --net:#6555d0;--net-d:rgba(101,85,208,.07);--net-b:rgba(101,85,208,.18);
-  --cpn:#d070a0;--cpn-d:rgba(208,112,160,.07);
-  --ab:rgba(0,168,138,.08);--at:#008a72;
-  --mb:rgba(208,112,32,.08);--mt:#b06018;
-  --ib:rgba(70,110,200,.08);--ib-c:#4068c0;
-  --ibg:rgba(70,110,200,.08);
-  --fc:#6555d0;--pc:#d07020;
-  --fx:#c8a000;--fx-d:rgba(200,160,0,.07);--fx-b:rgba(200,160,0,.15);
-  --pf-clr:#d07020;--pf-d:rgba(208,112,32,.06);--pf-b:rgba(208,112,32,.15);
-  --mo-clr:#3090b8;--mo-d:rgba(48,144,184,.07);--mo-b:rgba(48,144,184,.15);
-  --hb:rgba(0,0,0,.03);--ib2:rgba(0,0,0,.04);--dv:rgba(0,0,0,.06);--ov:rgba(0,0,0,.02);
-  --bg1:rgba(0,168,138,.04);--bg2:rgba(101,85,208,.04);
-}
-[data-theme="dark"]{
-  --bg:#08090d;--s1:#111218;--s2:#181a22;--bd:#262833;
-  --t1:#e8eaf0;--t2:#9498ac;--t3:#555872;
-  --pos:#00d4aa;--neg:#ff6b6b;
-  --rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);
-  --cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);
-  --grs:#ffd93d;--grs-d:rgba(255,217,61,.07);
-  --op:#ff8c42;--op-d:rgba(255,140,66,.07);
-  --net:#7c6cf0;--net-d:rgba(124,108,240,.07);--net-b:rgba(124,108,240,.16);
-  --cpn:#f8a5c3;--cpn-d:rgba(248,165,195,.06);
-  --ab:rgba(0,212,170,.1);--at:#00d4aa;
-  --mb:rgba(255,140,66,.1);--mt:#ff8c42;
-  --ib:rgba(108,155,255,.1);--ib-c:#6c9bff;
-  --ibg:rgba(108,155,255,.1);
-  --fc:#7c6cf0;--pc:#ff8c42;
-  --fx:#ffd93d;--fx-d:rgba(255,217,61,.08);--fx-b:rgba(255,217,61,.18);
-  --pf-clr:#ff8c42;--pf-d:rgba(255,140,66,.06);--pf-b:rgba(255,140,66,.12);
-  --mo-clr:#8be9fd;--mo-d:rgba(139,233,253,.08);--mo-b:rgba(139,233,253,.15);
-  --hb:rgba(255,255,255,.012);--ib2:rgba(255,255,255,.025);--dv:rgba(255,255,255,.015);--ov:rgba(255,255,255,.012);
-  --bg1:rgba(0,212,170,.03);--bg2:rgba(124,108,240,.03);
-}
-[data-theme="midnight"]{
-  --bg:#060b18;--s1:#0c1222;--s2:#11192e;--bd:#1c2640;
-  --t1:#dce4f5;--t2:#7b8cb5;--t3:#485578;
-  --pos:#00d4aa;--neg:#ff6b6b;
-  --rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);
-  --cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);
-  --grs:#ffd93d;--grs-d:rgba(255,217,61,.07);
-  --op:#ff8c42;--op-d:rgba(255,140,66,.07);
-  --net:#7c8cf0;--net-d:rgba(124,140,240,.07);--net-b:rgba(124,140,240,.16);
-  --cpn:#f0a0c0;--cpn-d:rgba(240,160,192,.06);
-  --ab:rgba(0,212,170,.1);--at:#00d4aa;
-  --mb:rgba(255,140,66,.1);--mt:#ff8c42;
-  --ib:rgba(100,140,255,.1);--ib-c:#648cff;
-  --ibg:rgba(100,140,255,.1);
-  --fc:#7c8cf0;--pc:#ff8c42;
-  --fx:#ffd93d;--fx-d:rgba(255,217,61,.08);--fx-b:rgba(255,217,61,.18);
-  --pf-clr:#ff8c42;--pf-d:rgba(255,140,66,.06);--pf-b:rgba(255,140,66,.12);
-  --mo-clr:#80d0f0;--mo-d:rgba(128,208,240,.08);--mo-b:rgba(128,208,240,.15);
-  --hb:rgba(255,255,255,.01);--ib2:rgba(255,255,255,.02);--dv:rgba(255,255,255,.012);--ov:rgba(255,255,255,.01);
-  --bg1:rgba(0,180,255,.03);--bg2:rgba(100,100,240,.03);
-}
-[data-theme="forest"]{
-  --bg:#071209;--s1:#0d1a10;--s2:#122216;--bd:#1e3422;
-  --t1:#ddf0e0;--t2:#7ab88a;--t3:#487850;
-  --pos:#00d4aa;--neg:#ff6b6b;
-  --rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);
-  --cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);
-  --grs:#c8e84a;--grs-d:rgba(200,232,74,.07);
-  --op:#ffb040;--op-d:rgba(255,176,64,.07);
-  --net:#50c890;--net-d:rgba(80,200,144,.07);--net-b:rgba(80,200,144,.16);
-  --cpn:#e0a0c0;--cpn-d:rgba(224,160,192,.06);
-  --ab:rgba(0,212,170,.1);--at:#00d4aa;
-  --mb:rgba(255,176,64,.1);--mt:#ffb040;
-  --ib:rgba(80,180,130,.1);--ib-c:#50b482;
-  --ibg:rgba(80,180,130,.1);
-  --fc:#50c890;--pc:#ffb040;
-  --fx:#c8e84a;--fx-d:rgba(200,232,74,.08);--fx-b:rgba(200,232,74,.18);
-  --pf-clr:#ffb040;--pf-d:rgba(255,176,64,.06);--pf-b:rgba(255,176,64,.12);
-  --mo-clr:#60d8a0;--mo-d:rgba(96,216,160,.08);--mo-b:rgba(96,216,160,.15);
-  --hb:rgba(255,255,255,.01);--ib2:rgba(255,255,255,.02);--dv:rgba(255,255,255,.012);--ov:rgba(255,255,255,.01);
-  --bg1:rgba(0,212,170,.03);--bg2:rgba(80,200,144,.03);
-}
-[data-theme="amber"]{
-  --bg:#110c06;--s1:#1a1408;--s2:#221a0c;--bd:#342818;
-  --t1:#f5e8d0;--t2:#c0a070;--t3:#806840;
-  --pos:#00d4aa;--neg:#ff6b6b;
-  --rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);
-  --cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);
-  --grs:#ffd93d;--grs-d:rgba(255,217,61,.07);
-  --op:#ff9f40;--op-d:rgba(255,159,64,.07);
-  --net:#c8a0f0;--net-d:rgba(200,160,240,.07);--net-b:rgba(200,160,240,.16);
-  --cpn:#f0a0b0;--cpn-d:rgba(240,160,176,.06);
-  --ab:rgba(0,212,170,.1);--at:#00d4aa;
-  --mb:rgba(255,159,64,.1);--mt:#ff9f40;
-  --ib:rgba(200,160,100,.1);--ib-c:#c8a064;
-  --ibg:rgba(200,160,100,.1);
-  --fc:#c8a0f0;--pc:#ff9f40;
-  --fx:#ffd93d;--fx-d:rgba(255,217,61,.08);--fx-b:rgba(255,217,61,.18);
-  --pf-clr:#ff9f40;--pf-d:rgba(255,159,64,.06);--pf-b:rgba(255,159,64,.12);
-  --mo-clr:#e8c878;--mo-d:rgba(232,200,120,.08);--mo-b:rgba(232,200,120,.15);
-  --hb:rgba(255,255,255,.01);--ib2:rgba(255,255,255,.02);--dv:rgba(255,255,255,.012);--ov:rgba(255,255,255,.01);
-  --bg1:rgba(255,217,61,.03);--bg2:rgba(200,160,240,.03);
-}
-
-/* ════════ Base ════════ */
+:root,[data-theme="light"]{--bg:#f4f5f7;--s1:#ffffff;--s2:#eef0f4;--bd:#d5d8e0;--t1:#1a1c28;--t2:#5a5e72;--t3:#9094a6;--pos:#00a88a;--neg:#e05050;--rev:#00a88a;--rev-d:rgba(0,168,138,.07);--rev-b:rgba(0,168,138,.18);--cost:#e05050;--cost-d:rgba(224,80,80,.07);--cost-b:rgba(224,80,80,.18);--grs:#c8a000;--grs-d:rgba(200,160,0,.07);--op:#d07020;--op-d:rgba(208,112,32,.07);--net:#6555d0;--net-d:rgba(101,85,208,.07);--net-b:rgba(101,85,208,.18);--cpn:#d070a0;--cpn-d:rgba(208,112,160,.07);--ab:rgba(0,168,138,.08);--at:#008a72;--mb:rgba(208,112,32,.08);--mt:#b06018;--ib:rgba(70,110,200,.08);--ib-c:#4068c0;--ibg:rgba(70,110,200,.08);--fc:#6555d0;--pc:#d07020;--fx:#c8a000;--fx-d:rgba(200,160,0,.07);--fx-b:rgba(200,160,0,.15);--pf-clr:#d07020;--pf-d:rgba(208,112,32,.06);--pf-b:rgba(208,112,32,.15);--mo-clr:#3090b8;--mo-d:rgba(48,144,184,.07);--mo-b:rgba(48,144,184,.15);--hb:rgba(0,0,0,.03);--ib2:rgba(0,0,0,.04);--dv:rgba(0,0,0,.06);--ov:rgba(0,0,0,.02);--bg1:rgba(0,168,138,.04);--bg2:rgba(101,85,208,.04)}
+[data-theme="dark"]{--bg:#08090d;--s1:#111218;--s2:#181a22;--bd:#262833;--t1:#e8eaf0;--t2:#9498ac;--t3:#555872;--pos:#00d4aa;--neg:#ff6b6b;--rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);--cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);--grs:#ffd93d;--grs-d:rgba(255,217,61,.07);--op:#ff8c42;--op-d:rgba(255,140,66,.07);--net:#7c6cf0;--net-d:rgba(124,108,240,.07);--net-b:rgba(124,108,240,.16);--cpn:#f8a5c3;--cpn-d:rgba(248,165,195,.06);--ab:rgba(0,212,170,.1);--at:#00d4aa;--mb:rgba(255,140,66,.1);--mt:#ff8c42;--ib:rgba(108,155,255,.1);--ib-c:#6c9bff;--ibg:rgba(108,155,255,.1);--fc:#7c6cf0;--pc:#ff8c42;--fx:#ffd93d;--fx-d:rgba(255,217,61,.08);--fx-b:rgba(255,217,61,.18);--pf-clr:#ff8c42;--pf-d:rgba(255,140,66,.06);--pf-b:rgba(255,140,66,.12);--mo-clr:#8be9fd;--mo-d:rgba(139,233,253,.08);--mo-b:rgba(139,233,253,.15);--hb:rgba(255,255,255,.012);--ib2:rgba(255,255,255,.025);--dv:rgba(255,255,255,.015);--ov:rgba(255,255,255,.012);--bg1:rgba(0,212,170,.03);--bg2:rgba(124,108,240,.03)}
+[data-theme="midnight"]{--bg:#060b18;--s1:#0c1222;--s2:#11192e;--bd:#1c2640;--t1:#dce4f5;--t2:#7b8cb5;--t3:#485578;--pos:#00d4aa;--neg:#ff6b6b;--rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);--cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);--grs:#ffd93d;--grs-d:rgba(255,217,61,.07);--op:#ff8c42;--op-d:rgba(255,140,66,.07);--net:#7c8cf0;--net-d:rgba(124,140,240,.07);--net-b:rgba(124,140,240,.16);--cpn:#f0a0c0;--cpn-d:rgba(240,160,192,.06);--ab:rgba(0,212,170,.1);--at:#00d4aa;--mb:rgba(255,140,66,.1);--mt:#ff8c42;--ib:rgba(100,140,255,.1);--ib-c:#648cff;--ibg:rgba(100,140,255,.1);--fc:#7c8cf0;--pc:#ff8c42;--fx:#ffd93d;--fx-d:rgba(255,217,61,.08);--fx-b:rgba(255,217,61,.18);--pf-clr:#ff8c42;--pf-d:rgba(255,140,66,.06);--pf-b:rgba(255,140,66,.12);--mo-clr:#80d0f0;--mo-d:rgba(128,208,240,.08);--mo-b:rgba(128,208,240,.15);--hb:rgba(255,255,255,.01);--ib2:rgba(255,255,255,.02);--dv:rgba(255,255,255,.012);--ov:rgba(255,255,255,.01);--bg1:rgba(0,180,255,.03);--bg2:rgba(100,100,240,.03)}
+[data-theme="forest"]{--bg:#071209;--s1:#0d1a10;--s2:#122216;--bd:#1e3422;--t1:#ddf0e0;--t2:#7ab88a;--t3:#487850;--pos:#00d4aa;--neg:#ff6b6b;--rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);--cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);--grs:#c8e84a;--grs-d:rgba(200,232,74,.07);--op:#ffb040;--op-d:rgba(255,176,64,.07);--net:#50c890;--net-d:rgba(80,200,144,.07);--net-b:rgba(80,200,144,.16);--cpn:#e0a0c0;--cpn-d:rgba(224,160,192,.06);--ab:rgba(0,212,170,.1);--at:#00d4aa;--mb:rgba(255,176,64,.1);--mt:#ffb040;--ib:rgba(80,180,130,.1);--ib-c:#50b482;--ibg:rgba(80,180,130,.1);--fc:#50c890;--pc:#ffb040;--fx:#c8e84a;--fx-d:rgba(200,232,74,.08);--fx-b:rgba(200,232,74,.18);--pf-clr:#ffb040;--pf-d:rgba(255,176,64,.06);--pf-b:rgba(255,176,64,.12);--mo-clr:#60d8a0;--mo-d:rgba(96,216,160,.08);--mo-b:rgba(96,216,160,.15);--hb:rgba(255,255,255,.01);--ib2:rgba(255,255,255,.02);--dv:rgba(255,255,255,.012);--ov:rgba(255,255,255,.01);--bg1:rgba(0,212,170,.03);--bg2:rgba(80,200,144,.03)}
+[data-theme="amber"]{--bg:#110c06;--s1:#1a1408;--s2:#221a0c;--bd:#342818;--t1:#f5e8d0;--t2:#c0a070;--t3:#806840;--pos:#00d4aa;--neg:#ff6b6b;--rev:#00d4aa;--rev-d:rgba(0,212,170,.07);--rev-b:rgba(0,212,170,.16);--cost:#ff6b6b;--cost-d:rgba(255,107,107,.07);--cost-b:rgba(255,107,107,.16);--grs:#ffd93d;--grs-d:rgba(255,217,61,.07);--op:#ff9f40;--op-d:rgba(255,159,64,.07);--net:#c8a0f0;--net-d:rgba(200,160,240,.07);--net-b:rgba(200,160,240,.16);--cpn:#f0a0b0;--cpn-d:rgba(240,160,176,.06);--ab:rgba(0,212,170,.1);--at:#00d4aa;--mb:rgba(255,159,64,.1);--mt:#ff9f40;--ib:rgba(200,160,100,.1);--ib-c:#c8a064;--ibg:rgba(200,160,100,.1);--fc:#c8a0f0;--pc:#ff9f40;--fx:#ffd93d;--fx-d:rgba(255,217,61,.08);--fx-b:rgba(255,217,61,.18);--pf-clr:#ff9f40;--pf-d:rgba(255,159,64,.06);--pf-b:rgba(255,159,64,.12);--mo-clr:#e8c878;--mo-d:rgba(232,200,120,.08);--mo-b:rgba(232,200,120,.15);--hb:rgba(255,255,255,.01);--ib2:rgba(255,255,255,.02);--dv:rgba(255,255,255,.012);--ov:rgba(255,255,255,.01);--bg1:rgba(255,217,61,.03);--bg2:rgba(200,160,240,.03)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;transition:background .3s,color .3s}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 10% 15%,var(--bg1) 0%,transparent 50%),radial-gradient(ellipse at 90% 85%,var(--bg2) 0%,transparent 50%);pointer-events:none}
 .app{position:relative;max-width:1480px;margin:0 auto;padding:32px 40px 60px}
 .hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--bd)}
-.hdr h1{font-family:'Instrument Serif',serif;font-size:36px;font-weight:400;color:var(--t1)}
-.hdr h1 em{font-style:italic;color:var(--rev)}
+.hdr h1{font-family:'Instrument Serif',serif;font-size:36px;font-weight:400;color:var(--t1)}.hdr h1 em{font-style:italic;color:var(--rev)}
 .hdr .sub{font-size:11px;color:var(--t3);margin-top:5px;letter-spacing:2px;text-transform:uppercase}
 .hdr-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 select#qDate{appearance:none;-webkit-appearance:none;background:var(--s2);border:1px solid var(--bd);color:var(--t1);padding:8px 32px 8px 12px;border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239094a6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;min-width:140px}
-select#qDate:focus{outline:none;border-color:var(--rev)}
-select#qDate:disabled{opacity:.5;cursor:not-allowed}
-.btn-imp{background:var(--ib-c);color:#fff;border:none;padding:8px 20px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.btn-imp:hover{box-shadow:0 3px 16px rgba(108,155,255,.3)}
-.btn-imp input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-.btn-imp.re-show{opacity:.7}.btn-imp.re-show:hover{opacity:1}
+select#qDate:focus{outline:none;border-color:var(--rev)}select#qDate:disabled{opacity:.5;cursor:not-allowed}
+.btn-imp{background:var(--ib-c);color:#fff;border:none;padding:8px 20px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}.btn-imp:hover{box-shadow:0 3px 16px rgba(108,155,255,.3)}
+.btn-imp input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}.btn-imp.re-show{opacity:.7}.btn-imp.re-show:hover{opacity:1}
 .slb{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:5px;margin-top:6px;justify-content:flex-end}
-.sd{width:5px;height:5px;border-radius:50%;background:var(--t3);display:inline-block}
-.sd.on{background:var(--rev);animation:pulse 2s infinite}.sd.im{background:var(--ib-c);animation:pulse 2s infinite}
+.sd{width:5px;height:5px;border-radius:50%;background:var(--t3);display:inline-block}.sd.on{background:var(--rev);animation:pulse 2s infinite}.sd.im{background:var(--ib-c);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* Theme Swatches */
-.theme-bar{display:flex;align-items:center;gap:8px;margin-top:8px;justify-content:flex-end}
-.theme-bar .tl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
-.swatch{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;position:relative;flex-shrink:0}
-.swatch:hover{transform:scale(1.2)}
-.swatch.active{border-color:var(--rev);box-shadow:0 0 0 2px var(--rev-d)}
-.swatch[data-theme="light"]{background:linear-gradient(135deg,#f4f5f7,#d5d8e0)}
-.swatch[data-theme="dark"]{background:linear-gradient(135deg,#111218,#262833)}
-.swatch[data-theme="midnight"]{background:linear-gradient(135deg,#0c1222,#1c2640)}
-.swatch[data-theme="forest"]{background:linear-gradient(135deg,#0d1a10,#1e3422)}
-.swatch[data-theme="amber"]{background:linear-gradient(135deg,#1a1408,#342818)}
-
-/* Summary */
+.theme-bar{display:flex;align-items:center;gap:8px;margin-top:8px;justify-content:flex-end}.theme-bar .tl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
+.swatch{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;position:relative;flex-shrink:0}.swatch:hover{transform:scale(1.2)}.swatch.active{border-color:var(--rev);box-shadow:0 0 0 2px var(--rev-d)}
+.swatch[data-theme="light"]{background:linear-gradient(135deg,#f4f5f7,#d5d8e0)}.swatch[data-theme="dark"]{background:linear-gradient(135deg,#111218,#262833)}.swatch[data-theme="midnight"]{background:linear-gradient(135deg,#0c1222,#1c2640)}.swatch[data-theme="forest"]{background:linear-gradient(135deg,#0d1a10,#1e3422)}.swatch[data-theme="amber"]{background:linear-gradient(135deg,#1a1408,#342818)}
 .sr{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
 .sc{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:22px 20px;position:relative;overflow:hidden;opacity:0;animation:fu .5s ease forwards;transition:background .3s,border-color .3s}
 .sc:nth-child(1){animation-delay:.06s}.sc:nth-child(2){animation-delay:.1s}.sc:nth-child(3){animation-delay:.14s}.sc:nth-child(4){animation-delay:.18s}
-.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.sc.c1::after{background:var(--rev)}.sc.c2::after{background:var(--cost)}.sc.c3::after{background:var(--grs)}.sc.c4::after{background:var(--net)}
-.sc .lb{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
-.sc .vl{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700}
-.sc .su{font-size:11px;color:var(--t2);margin-top:5px;font-family:'JetBrains Mono',monospace}
-.stb{margin-bottom:28px;opacity:0;animation:fu .5s ease forwards;animation-delay:.2s}
-.stb .sl{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:6px}
-.stk{height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--hb)}
-.sg{height:100%;transition:width .8s ease}.sg:first-child{border-radius:4px 0 0 4px}.sg:last-child{border-radius:0 4px 4px 0}
-.sld{display:flex;gap:20px;margin-top:8px;flex-wrap:wrap}
-.sld .si{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t2)}
-.sld .sd2{width:8px;height:8px;border-radius:2px}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}.sc.c1::after{background:var(--rev)}.sc.c2::after{background:var(--cost)}.sc.c3::after{background:var(--grs)}.sc.c4::after{background:var(--net)}
+.sc .lb{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}.sc .vl{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700}.sc .su{font-size:11px;color:var(--t2);margin-top:5px;font-family:'JetBrains Mono',monospace}
+.stb{margin-bottom:28px;opacity:0;animation:fu .5s ease forwards;animation-delay:.2s}.stb .sl{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:6px}
+.stk{height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--hb)}.sg{height:100%;transition:width .8s ease}.sg:first-child{border-radius:4px 0 0 4px}.sg:last-child{border-radius:0 4px 4px 0}
+.sld{display:flex;gap:20px;margin-top:8px;flex-wrap:wrap}.sld .si{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t2)}.sld .sd2{width:8px;height:8px;border-radius:2px}
 .p{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:26px;opacity:0;animation:fu .5s ease forwards;animation-delay:.24s;margin-bottom:18px;transition:background .3s,border-color .3s}
-.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
-.ph h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
-.ph h2 .dt{width:6px;height:6px;border-radius:50%}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--bd)}.ph h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}.ph h2 .dt{width:6px;height:6px;border-radius:50%}
 .dtr{background:var(--rev);box-shadow:0 0 5px var(--rev-d)}.dtc{background:var(--cost);box-shadow:0 0 5px var(--cost-d)}.dto{background:var(--op);box-shadow:0 0 5px var(--op-d)}
 .bg{font-size:9px;padding:3px 8px;border-radius:20px;letter-spacing:.3px;font-weight:600}
-.ba{background:var(--ab);color:var(--at);border:1px solid var(--rev-b)}.bm{background:var(--mb);color:var(--mt);border:1px solid var(--cost-b)}.bi{background:var(--ibg);color:var(--ib-c);border:1px solid var(--net-b)}.bp{background:var(--pf-d);color:var(--pf-clr);border:1px solid var(--pf-b)}.bx{background:var(--fx-d);color:var(--fx);border:1px solid var(--fx-b)}
+.bi{background:var(--ibg);color:var(--ib-c);border:1px solid var(--net-b)}.bm{background:var(--mb);color:var(--mt);border:1px solid var(--cost-b)}.bp{background:var(--pf-d);color:var(--pf-clr);border:1px solid var(--pf-b)}.bx{background:var(--fx-d);color:var(--fx);border:1px solid var(--fx-b)}
 .rg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rs{background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:18px;transition:background .3s}
-.rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--dv)}
-.rh h3{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}
-.rh h3 .d4{width:4px;height:4px;border-radius:50%}.rh .sv{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}
-.fr{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--dv)}
-.fr:last-child{border:none}.fr .fl{font-size:12px;color:var(--t2);display:flex;align-items:center;gap:5px}.fr .fv{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500}
-.ft{font-size:8px;padding:1px 4px;border-radius:3px;font-family:'JetBrains Mono',monospace}
-.fta{background:var(--ab);color:var(--at)}.ftm{background:var(--mb);color:var(--mt)}
+.rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--dv)}.rh h3{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}.rh h3 .d4{width:4px;height:4px;border-radius:50%}.rh .sv{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}
+.fr{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--dv)}.fr:last-child{border:none}.fr .fl{font-size:12px;color:var(--t2);display:flex;align-items:center;gap:5px}.fr .fv{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500}
+.ft{font-size:8px;padding:1px 4px;border-radius:3px;font-family:'JetBrains Mono',monospace}.fta{background:var(--ab);color:var(--at)}.ftm{background:var(--mb);color:var(--mt)}
 .fr .fv input{background:var(--ib2);border:1px solid var(--bd);color:var(--t1);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;padding:5px 8px;border-radius:5px;width:130px;text-align:right;transition:all .2s}
 .fr .fv input:focus{outline:none;border-color:var(--mt);background:var(--mb);box-shadow:0 0 0 2px var(--pf-d)}
 .fz{opacity:.35}.fd .fl{color:var(--cpn)}.fd .fv{color:var(--cpn)}
-.cb{background:var(--cpn-d);border:1px solid rgba(200,100,160,.1);border-radius:7px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:14px}
-.cb .cl{font-size:11px;color:var(--cpn)}.cb .cr2{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--cpn)}
+.cb{background:var(--cpn-d);border:1px solid rgba(200,100,160,.1);border-radius:7px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:14px}.cb .cl{font-size:11px;color:var(--cpn)}.cb .cr2{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--cpn)}
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.cb2{background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:16px;transition:background .3s}
-.cb2 h3{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--dv)}
-.cb2 .ds{font-size:10px;color:var(--t3);margin-top:6px;line-height:1.4}
-.hg{margin-bottom:14px}.hl{font-size:11px;color:var(--t2);margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.hd{display:inline-block;width:5px;height:5px;border-radius:50%}.hs{font-size:11px;color:var(--t3);margin-top:2px}
-.tr{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:2px solid var(--bd)}
-.tr label{font-size:13px;font-weight:700}.tr .tv{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700}
+.cb2{background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:16px;transition:background .3s}.cb2 h3{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--dv)}.cb2 .ds{font-size:10px;color:var(--t3);margin-top:6px;line-height:1.4}
+.hg{margin-bottom:14px}.hl{font-size:11px;color:var(--t2);margin-bottom:8px;display:flex;align-items:center;gap:5px}.hd{display:inline-block;width:5px;height:5px;border-radius:50%}.hs{font-size:11px;color:var(--t3);margin-top:2px}
+.tr{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:2px solid var(--bd)}.tr label{font-size:13px;font-weight:700}.tr .tv{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700}
 .ww{display:grid;grid-template-columns:repeat(7,1fr);align-items:center;gap:4px;margin:16px 0}
-.wb{text-align:center;padding:18px 8px;border-radius:9px}
-.wb .wl{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:5px}
-.wb .wv{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700}
-.wb .ws{font-size:10px;color:var(--t2);margin-top:3px;font-family:'JetBrains Mono',monospace}
-.wr{background:var(--rev-d);border:1px solid var(--rev-b)}.wg{background:var(--grs-d);border:1px solid rgba(200,160,0,.16)}
-.wo2{background:var(--op-d);border:1px solid rgba(200,120,40,.12)}.wn{background:var(--net-d);border:1px solid var(--net-b)}
-.wa{text-align:center;color:var(--t3);font-size:16px;display:flex;flex-direction:column;align-items:center;gap:1px}
-.wa .wo3{font-size:8px;font-family:'JetBrains Mono',monospace}
-.fm{margin-top:18px;padding:16px 20px;background:var(--ov);border-radius:9px;border:1px dashed var(--bd)}
-.fm h4{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.wb{text-align:center;padding:18px 8px;border-radius:9px}.wb .wl{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:5px}.wb .wv{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700}.wb .ws{font-size:10px;color:var(--t2);margin-top:3px;font-family:'JetBrains Mono',monospace}
+.wr{background:var(--rev-d);border:1px solid var(--rev-b)}.wg{background:var(--grs-d);border:1px solid rgba(200,160,0,.16)}.wo2{background:var(--op-d);border:1px solid rgba(200,120,40,.12)}.wn{background:var(--net-d);border:1px solid var(--net-b)}
+.wa{text-align:center;color:var(--t3);font-size:16px;display:flex;flex-direction:column;align-items:center;gap:1px}.wa .wo3{font-size:8px;font-family:'JetBrains Mono',monospace}
+.fm{margin-top:18px;padding:16px 20px;background:var(--ov);border-radius:9px;border:1px dashed var(--bd)}.fm h4{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
 .ff{display:flex;align-items:center;gap:5px;margin-bottom:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);flex-wrap:wrap}.ff:last-child{margin:0}
-.f2{padding:2px 6px;border-radius:3px;font-size:9px;font-weight:700}
-.f2r{background:var(--rev-d);color:var(--rev)}.f2c{background:var(--cost-d);color:var(--cost)}
-.f2g{background:var(--grs-d);color:var(--grs)}.f2o{background:var(--op-d);color:var(--op)}
-.f2n{background:var(--net-d);color:var(--net)}.f2p{background:var(--cpn-d);color:var(--cpn)}
-.f2f{background:var(--pf-d);color:var(--pf-clr)}.f2x{background:var(--fx-d);color:var(--fx)}
-.eq{color:var(--t3);font-weight:700}
-.pb{margin-top:16px}.pt{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;color:var(--t2)}
-.pt span:last-child{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px}
-.pk{height:9px;background:var(--hb);border-radius:5px;overflow:hidden}
-.pf{height:100%;border-radius:5px;transition:width .8s cubic-bezier(.25,.46,.45,.94);background:linear-gradient(90deg,var(--net),var(--grs));position:relative}
-.pf::after{content:'';position:absolute;right:0;top:0;bottom:0;width:14px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12));border-radius:0 5px 5px 0}
-.tb{width:100%;border-collapse:collapse;font-size:11px}
-.tb th{text-align:left;padding:9px 12px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--t3);font-weight:500;border-bottom:1px solid var(--bd)}
-.tb td{padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);border-bottom:1px solid var(--dv)}
-.tb tr:hover td{background:var(--hb)}.pv{color:var(--pos)}.nv{color:var(--neg)}
+.f2{padding:2px 6px;border-radius:3px;font-size:9px;font-weight:700}.f2r{background:var(--rev-d);color:var(--rev)}.f2c{background:var(--cost-d);color:var(--cost)}.f2g{background:var(--grs-d);color:var(--grs)}.f2o{background:var(--op-d);color:var(--op)}.f2n{background:var(--net-d);color:var(--net)}.f2f{background:var(--pf-d);color:var(--pf-clr)}.f2x{background:var(--fx-d);color:var(--fx)}.eq{color:var(--t3);font-weight:700}
+.pb{margin-top:16px}.pt{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;color:var(--t2)}.pt span:last-child{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px}
+.pk{height:9px;background:var(--hb);border-radius:5px;overflow:hidden}.pf{height:100%;border-radius:5px;transition:width .8s cubic-bezier(.25,.46,.45,.94);background:linear-gradient(90deg,var(--net),var(--grs));position:relative}.pf::after{content:'';position:absolute;right:0;top:0;bottom:0;width:14px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12));border-radius:0 5px 5px 0}
+.tb{width:100%;border-collapse:collapse;font-size:11px}.tb th{text-align:left;padding:9px 12px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--t3);font-weight:500;border-bottom:1px solid var(--bd)}.tb td{padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);border-bottom:1px solid var(--dv)}.tb tr:hover td{background:var(--hb)}.pv{color:var(--pos)}.nv{color:var(--neg)}
 .ac{display:flex;justify-content:flex-end;gap:8px;margin-top:24px;opacity:0;animation:fu .5s ease forwards;animation-delay:.5s}
-.b2{background:var(--s2);color:var(--t2);border:1px solid var(--bd);padding:9px 18px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
-.b2:hover{border-color:var(--t3);color:var(--t1)}
-.bs{background:linear-gradient(135deg,var(--net),#a29bfe);color:#fff;border:none;padding:9px 24px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
-.bs:hover{box-shadow:0 5px 20px var(--net-d)}
-.ip{background:var(--s2);border:1px dashed var(--ib-c);border-radius:10px;padding:20px;margin-bottom:18px;opacity:0;animation:fu .5s ease forwards;animation-delay:.22s;transition:background .3s}
-.ip.hidden{display:none}
-.ip .ih{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.ip .ih h3{font-size:13px;font-weight:600;color:var(--ib-c);display:flex;align-items:center;gap:6px}
-.ip .ih h3 .ii{width:18px;height:18px;border-radius:4px;background:var(--ibg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:var(--ib-c)}
-.ir{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.fi{font-size:12px;color:var(--t2);font-family:'JetBrains Mono',monospace}.fn{color:var(--ib-c);font-weight:600}
+.b2{background:var(--s2);color:var(--t2);border:1px solid var(--bd);padding:9px 18px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}.b2:hover{border-color:var(--t3);color:var(--t1)}
+.bs{background:linear-gradient(135deg,var(--net),#a29bfe);color:#fff;border:none;padding:9px 24px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}.bs:hover{box-shadow:0 5px 20px var(--net-d)}
+.ip{background:var(--s2);border:1px dashed var(--ib-c);border-radius:10px;padding:20px;margin-bottom:18px;opacity:0;animation:fu .5s ease forwards;animation-delay:.22s;transition:background .3s}.ip.hidden{display:none}
+.ip .ih{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.ip .ih h3{font-size:13px;font-weight:600;color:var(--ib-c);display:flex;align-items:center;gap:6px}.ip .ih h3 .ii{width:18px;height:18px;border-radius:4px;background:var(--ibg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:var(--ib-c)}
+.ir{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.fi{font-size:12px;color:var(--t2);font-family:'JetBrains Mono',monospace}.fn{color:var(--ib-c);font-weight:600}
 .ist{font-size:11px;color:var(--t3);margin-top:8px}.ist.ok{color:var(--pos)}.ist.er{color:var(--neg)}
-.im2{font-size:10px;color:var(--t3);margin-top:10px;line-height:1.6}
-.im2 code{background:var(--ib2);padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t2)}
+.im2{font-size:10px;color:var(--t3);margin-top:10px;line-height:1.6}.im2 code{background:var(--ib2);padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t2)}
 .pf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
-.pf-box{background:var(--s2);border:1px solid var(--pf-b);border-radius:9px;padding:18px;transition:background .3s}
-.pf-box h3{font-size:12px;font-weight:600;color:var(--pf-clr);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--pf-b);display:flex;align-items:center;gap:6px}
-.pf-box h3 .pd{width:5px;height:5px;border-radius:50%;background:var(--pf-clr)}
-.fx-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
-.fx-box{background:var(--s2);border:1px solid var(--fx-b);border-radius:9px;padding:16px;text-align:center;transition:background .3s}
-.fx-box .fxlb{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.fx-box .fxvl{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700}
-.fx-box .fxsub{font-size:10px;color:var(--t3);margin-top:4px;font-family:'JetBrains Mono',monospace}
+.pf-box{background:var(--s2);border:1px solid var(--pf-b);border-radius:9px;padding:18px;transition:background .3s}.pf-box h3{font-size:12px;font-weight:600;color:var(--pf-clr);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--pf-b);display:flex;align-items:center;gap:6px}.pf-box h3 .pd{width:5px;height:5px;border-radius:50%;background:var(--pf-clr)}
+/* ★ FX 4-column */
+.fx-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.fx-box{background:var(--s2);border:1px solid var(--fx-b);border-radius:9px;padding:14px 12px;text-align:center;transition:background .3s}
+.fx-box .fxlb{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.fx-box .fxvl{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700}
+.fx-box .fxsub{font-size:9px;color:var(--t3);margin-top:3px;font-family:'JetBrains Mono',monospace}
 .fx-box.fx-pos .fxvl{color:var(--rev)}.fx-box.fx-neg .fxvl{color:var(--neg)}
-.fx-tot{background:var(--fx-d);border:1px solid var(--fx-b);border-radius:7px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:6px}
-.fx-tot .fl2{font-size:11px;color:var(--fx)}.fx-tot .fv2{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.fx-tot{background:var(--fx-d);border:1px solid var(--fx-b);border-radius:7px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:6px}.fx-tot .fl2{font-size:11px;color:var(--fx)}.fx-tot .fv2{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
 .fx-tot.fx-neg-tot{background:var(--cost-d);border-color:var(--cost-b)}.fx-tot.fx-neg-tot .fl2{color:var(--cost)}.fx-tot.fx-neg-tot .fv2{color:var(--cost)}
-.mo-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--dv)}
-.mo-row:last-child{border:none}
-.mo-row .ml{font-size:12px;color:var(--t2);flex:1;display:flex;align-items:center;gap:5px}
-.mo-row .mv{display:flex;align-items:center;gap:6px}
-.mo-row .mv input{background:var(--ib2);border:1px solid var(--bd);color:var(--t1);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;padding:5px 8px;border-radius:5px;width:110px;text-align:right;transition:all .2s}
-.mo-row .mv input:focus{outline:none;border-color:var(--mo-clr);background:var(--mo-d);box-shadow:0 0 0 2px var(--mo-d)}
+.mo-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--dv)}.mo-row:last-child{border:none}.mo-row .ml{font-size:12px;color:var(--t2);flex:1;display:flex;align-items:center;gap:5px}.mo-row .mv{display:flex;align-items:center;gap:6px}
+.mo-row .mv input{background:var(--ib2);border:1px solid var(--bd);color:var(--t1);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;padding:5px 8px;border-radius:5px;width:110px;text-align:right;transition:all .2s}.mo-row .mv input:focus{outline:none;border-color:var(--mo-clr);background:var(--mo-d);box-shadow:0 0 0 2px var(--mo-d)}
 .mo-row .md{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mo-clr);min-width:110px;text-align:right;white-space:nowrap}
 .mo-tag{font-size:8px;padding:1px 4px;border-radius:3px;font-family:'JetBrains Mono',monospace;background:var(--mo-d);color:var(--mo-clr)}
-.days-indicator{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mo-clr);font-family:'JetBrains Mono',monospace;background:var(--mo-d);padding:3px 10px;border-radius:5px;border:1px solid var(--mo-b)}
-.days-indicator .dot{width:5px;height:5px;border-radius:50%;background:var(--mo-clr);animation:pulse 2s infinite}
-@media(max-width:1200px){.rg,.cg,.pf-row{grid-template-columns:1fr}.fx-row{grid-template-columns:1fr}.ww{grid-template-columns:1fr;gap:6px}.wa{transform:rotate(90deg);padding:3px 0}.sr{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.app{padding:14px}.hdr{flex-direction:column;align-items:flex-start;gap:10px}.hdr-r{justify-content:flex-start}.sr{grid-template-columns:1fr}.sc .vl{font-size:20px}}
+.days-indicator{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mo-clr);font-family:'JetBrains Mono',monospace;background:var(--mo-d);padding:3px 10px;border-radius:5px;border:1px solid var(--mo-b)}.days-indicator .dot{width:5px;height:5px;border-radius:50%;background:var(--mo-clr);animation:pulse 2s infinite}
+@media(max-width:1200px){.rg,.cg,.pf-row{grid-template-columns:1fr}.fx-row{grid-template-columns:1fr 1fr}.ww{grid-template-columns:1fr;gap:6px}.wa{transform:rotate(90deg);padding:3px 0}.sr{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.app{padding:14px}.hdr{flex-direction:column;align-items:flex-start;gap:10px}.hdr-r{justify-content:flex-start}.sr{grid-template-columns:1fr}.sc .vl{font-size:20px}.fx-row{grid-template-columns:1fr}}
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body data-theme="light">
 <div class="app">
-
 <div class="hdr">
   <div><h1>Daily <em>P&L</em> Tracker</h1><div class="sub">每日利润分析 · 单位：日元（JPY） · 月费÷当月天数</div></div>
   <div style="text-align:right">
@@ -284,57 +115,52 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
     </div>
   </div>
 </div>
-
 <div class="ip" id="iPnl">
   <div class="ih"><h3><span class="ii">↑</span>XLSX 导入</h3><span class="bg bi">Excel → 仪表盘</span></div>
   <div class="ir"><div class="fi" id="fInf">未选择文件</div></div>
   <div class="ist" id="iSt">选择从数据库导出的 XLSX 文件，系统将自动匹配列头并填充数据</div>
   <div class="im2" id="iMp"></div>
 </div>
-
 <div class="sr">
   <div class="sc c1"><div class="lb">每日收入（净额·日元）</div><div class="vl" id="sR" style="color:var(--rev)">¥0</div><div class="su" id="sRS">--</div></div>
   <div class="sc c2"><div class="lb">每日直接成本（日元）</div><div class="vl" id="sC" style="color:var(--cost)">¥0</div><div class="su" id="sCS">手动录入</div></div>
   <div class="sc c3"><div class="lb">毛利润（日元）</div><div class="vl" id="sG" style="color:var(--grs)">¥0</div><div class="su" id="sGS">毛利率 --</div></div>
   <div class="sc c4"><div class="lb">净利润（日元）</div><div class="vl" id="sN" style="color:var(--net)">¥0</div><div class="su" id="sNS">净利率 --</div></div>
 </div>
-
-<div class="stb" id="stB" style="display:none">
-  <div class="sl"><span>收入结构</span><span id="stT">¥0</span></div>
-  <div class="stk" id="stK"></div>
-  <div class="sld" id="stL"></div>
-</div>
+<div class="stb" id="stB" style="display:none"><div class="sl"><span>收入结构</span><span id="stT">¥0</span></div><div class="stk" id="stK"></div><div class="sld" id="stL"></div></div>
 
 <!-- Revenue -->
 <div class="p" style="animation-delay:.24s">
-  <div class="ph"><h2><span class="dt dtr"></span>每日收入明细（日元）</h2><span class="bg bi" id="rBdg">XLSX Import</span></div>
+  <div class="ph"><h2><span class="dt dtr"></span>每日收入明细（日元）</h2><span class="bg bi">XLSX Import</span></div>
   <div class="rg">
     <div class="rs"><div class="rh"><h3><span class="d4" style="background:var(--rev)"></span>购买手续费</h3><span class="sv" style="color:var(--rev)" id="rP">¥0</span></div>
       <div class="fr"><span class="fl">订单手续费 <span class="ft fta">订单手续费(原价)</span></span><span class="fv" id="vCm">¥0</span></div>
-      <div class="fr fd fz" id="rCC"><span class="fl">手续费优惠券减免 <span class="ft fta">手续费优惠券减免</span></span><span class="fv" id="vCC">-¥0</span></div>
+      <div class="fr fd fz" id="rCC"><span class="fl">手续费优惠券减免</span><span class="fv" id="vCC">-¥0</span></div>
     </div>
     <div class="rs"><div class="rh"><h3><span class="d4" style="background:var(--rev)"></span>物流服务费</h3><span class="sv" style="color:var(--rev)" id="rL">¥0</span></div>
-      <div class="fr"><span class="fl">运费收入 <span class="ft fta">运费(原价)</span></span><span class="fv" id="vFr">¥0</span></div>
-      <div class="fr fz" id="rLC"><span class="fl">物流手续费 <span class="ft fta">物流手续费</span></span><span class="fv" id="vLC">¥0</span></div>
-      <div class="fr fz" id="rRm"><span class="fl">偏远地区附加 <span class="ft fta">偏远附加</span></span><span class="fv" id="vRm">¥0</span></div>
-      <div class="fr fz" id="rFl"><span class="fl">燃油附加 <span class="ft fta">燃油附加</span></span><span class="fv" id="vFl">¥0</span></div>
-      <div class="fr fz" id="rTx"><span class="fl">补税费用 <span class="ft fta">补税费用</span></span><span class="fv" id="vTx">¥0</span></div>
-      <div class="fr fd"><span class="fl">运费优惠券 <span class="ft fta">运费优惠券</span></span><span class="fv" id="vFCp">-¥0</span></div>
-      <div class="fr fd fz" id="rLCp"><span class="fl">物流手续费优惠 <span class="ft fta">物流手续费优惠</span></span><span class="fv" id="vLCp">-¥0</span></div>
-      <div class="fr fd fz" id="rDi"><span class="fl">物流折扣 <span class="ft fta">物流折扣</span></span><span class="fv" id="vDi">-¥0</span></div>
+      <div class="fr"><span class="fl">运费收入</span><span class="fv" id="vFr">¥0</span></div>
+      <div class="fr fz" id="rLC"><span class="fl">物流手续费</span><span class="fv" id="vLC">¥0</span></div>
+      <div class="fr fz" id="rRm"><span class="fl">偏远地区附加</span><span class="fv" id="vRm">¥0</span></div>
+      <div class="fr fz" id="rFl"><span class="fl">燃油附加</span><span class="fv" id="vFl">¥0</span></div>
+      <div class="fr fz" id="rTx"><span class="fl">补税费用</span><span class="fv" id="vTx">¥0</span></div>
+      <div class="fr fd"><span class="fl">运费优惠券</span><span class="fv" id="vFCp">-¥0</span></div>
+      <div class="fr fd fz" id="rLCp"><span class="fl">物流手续费优惠</span><span class="fv" id="vLCp">-¥0</span></div>
+      <div class="fr fd fz" id="rDi"><span class="fl">物流折扣</span><span class="fv" id="vDi">-¥0</span></div>
     </div>
     <div class="rs"><div class="rh"><h3><span class="d4" style="background:var(--rev)"></span>包装费</h3><span class="sv" style="color:var(--rev)" id="rPk">¥0</span></div>
-      <div class="fr"><span class="fl">打包箱费用 <span class="ft fta">包装费 净额</span></span><span class="fv" id="vPk">¥0</span></div>
+      <div class="fr"><span class="fl">打包箱费用</span><span class="fv" id="vPk">¥0</span></div>
     </div>
     <div class="rs"><div class="rh"><h3><span class="d4" style="background:var(--rev)"></span>增值服务费</h3><span class="sv" style="color:var(--rev)" id="rV">¥0</span></div>
-      <div class="fr"><span class="fl">订单增值服务 <span class="ft fta">订单增值服务(原价)</span></span><span class="fv" id="vOV">¥0</span></div>
-      <div class="fr fz" id="rVR"><span class="fl">订单增值服务退款 <span class="ft fta">订单增值退款</span></span><span class="fv" id="vVR">-¥0</span></div>
-      <div class="fr"><span class="fl">物流增值服务 <span class="ft fta">物流增值服务费</span></span><span class="fv" id="vLV">¥0</span></div>
-      <div class="fr fz" id="rIn"><span class="fl">保价费 <span class="ft fta">保价费</span></span><span class="fv" id="vIn">¥0</span></div>
-      <div class="fr fz" id="rDc"><span class="fl">出口申报手续费 <span class="ft fta">出口申报费</span></span><span class="fv" id="vDc">¥0</span></div>
+      <div class="fr"><span class="fl">订单增值服务</span><span class="fv" id="vOV">¥0</span></div>
+      <div class="fr fz" id="rVR"><span class="fl">订单增值服务退款</span><span class="fv" id="vVR">-¥0</span></div>
+      <div class="fr"><span class="fl">物流增值服务</span><span class="fv" id="vLV">¥0</span></div>
+      <div class="fr fz" id="rIn"><span class="fl">保价费</span><span class="fv" id="vIn">¥0</span></div>
+      <div class="fr fz" id="rDc"><span class="fl">出口申报手续费</span><span class="fv" id="vDc">¥0</span></div>
     </div>
   </div>
   <div class="cb"><div class="cl">优惠券 / 折扣减免合计</div><div class="cr2" id="vCT">-¥0</div></div>
+
+  <!-- Platform Fee -->
   <div style="margin-top:18px"><div class="rh" style="margin-bottom:14px"><h3><span class="d4" style="background:var(--pf-clr)"></span>平台手续费（自动 · 收入扣减项）</h3><span class="bg bp">自动计算</span></div>
     <div class="pf-row">
       <div class="pf-box"><h3><span class="pd"></span>煤炉 Mercari</h3>
@@ -353,14 +179,17 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
     <div style="font-size:11px;color:var(--pf-clr)">平台手续费合计（收入中扣除）</div>
     <div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--pf-clr)" id="pfTT">-¥0</div>
   </div>
+
+  <!-- ★ FX Spread (4 flows) -->
   <div style="margin-top:22px"><div class="rh" style="margin-bottom:14px"><h3><span class="d4" style="background:var(--fx)"></span>汇差收入（自动）</h3><span class="bg bx">自动计算</span></div>
     <div class="fx-row">
       <div class="fx-box fx-pos"><div class="fxlb">充值入金</div><div class="fxvl" id="fxDSp">¥0</div><div class="fxsub" id="fxDJpy">JPY ¥0</div><div class="fxsub" id="fxDCny">CNY ¥0</div></div>
-      <div class="fx-box fx-neg"><div class="fxlb">退款至钱包</div><div class="fxvl" id="fxRSp">-¥0</div><div class="fxsub" id="fxRJpy">JPY ¥0</div></div>
+      <div class="fx-box fx-pos"><div class="fxlb">订单付款</div><div class="fxvl" id="fxOSp">¥0</div><div class="fxsub" id="fxOJpy">JPY ¥0</div><div class="fxsub" id="fxOCny">CNY ¥0</div></div>
+      <div class="fx-box fx-neg"><div class="fxlb">原路退回</div><div class="fxvl" id="fxRSp">-¥0</div><div class="fxsub" id="fxRJpy">JPY ¥0</div><div class="fxsub" id="fxRCny">CNY ¥0</div></div>
       <div class="fx-box fx-neg"><div class="fxlb">提现</div><div class="fxvl" id="fxWSp">-¥0</div><div class="fxsub" id="fxWJpy">JPY ¥0</div><div class="fxsub" id="fxWCny">CNY ¥0</div></div>
     </div>
     <div class="fx-tot"><div class="fl2">汇差小计</div><div class="fv2" id="fxSub">¥0</div></div>
-    <div class="fx-tot fx-neg-tot"><div class="fl2">第三方代收手续费 (0.8% × 充值CNY)</div><div class="fv2" id="fx3rd">-¥0</div></div>
+    <div class="fx-tot fx-neg-tot"><div class="fl2">第三方代收手续费 (0.8% × 入金CNY)</div><div class="fv2" id="fx3rd">-¥0</div></div>
   </div>
   <div style="background:var(--fx-d);border:1px solid var(--fx-b);border-radius:7px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:6px">
     <div style="font-size:11px;color:var(--fx)">汇差净额</div>
@@ -375,21 +204,15 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
   <div class="ph"><h2><span class="dt dtc"></span>每日直接成本（日元）</h2><span class="bg bm">手动录入 · 6项</span></div>
   <div class="cg">
     <div class="cb2"><h3>实际物流费</h3><div class="fr"><span class="fl">付给物流商的费用 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cFr" value="0" oninput="recalc()"></span></div><div class="ds">按实际结算金额录入（每日）</div></div>
-    <div class="cb2"><h3>新箱子耗材成本</h3><div class="fr"><span class="fl">箱子 + 耗材采购 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cBx" value="0" oninput="recalc()"></span></div><div class="ds">按实际采购金额录入（每日）</div></div>
+    <div class="cb2"><h3>新箱子耗材成本</h3><div class="fr"><span class="fl">箱子 + 耗材采购 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cBx" value="0" oninput="recalc()"></span></div></div>
   </div>
   <div class="cg" style="margin-top:14px">
-    <div class="cb2"><h3>其他平台手续费</h3><div class="fr"><span class="fl">Yahoo / Amazon 等 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cPl" value="0" oninput="recalc()"></span></div><div class="ds">非煤炉/乐天二手的平台佣金（每日）</div></div>
-    <div class="cb2"><h3>仓库损耗（异常订单赔付）</h3><div class="fr"><span class="fl">破损 / 丢失 / 异常赔付 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cLs" value="0" oninput="recalc()"></span></div><div class="ds">仓库操作损耗及异常订单赔付（每日）</div></div>
+    <div class="cb2"><h3>其他平台手续费</h3><div class="fr"><span class="fl">Yahoo / Amazon 等 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cPl" value="0" oninput="recalc()"></span></div><div class="ds">非煤炉/乐天二手的平台佣金</div></div>
+    <div class="cb2"><h3>仓库损耗（异常订单赔付）</h3><div class="fr"><span class="fl">破损 / 丢失 / 异常赔付 <span class="ft ftm">手动</span></span><span class="fv"><input type="text" class="mf" id="cLs" value="0" oninput="recalc()"></span></div></div>
   </div>
   <div class="cg" style="margin-top:14px">
-    <div class="cb2"><h3>垃圾处理费 <span class="mo-tag">月额→日摊</span></h3>
-      <div class="mo-row"><span class="ml">月额 <span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="cTrM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="cTrD" class="md">÷31= ¥0</span></span></div>
-      <div class="ds">输入月度总额，自动按当月天数日摊</div>
-    </div>
-    <div class="cb2"><h3>其他预付费 <span class="mo-tag">月额→日摊</span></h3>
-      <div class="mo-row"><span class="ml">月额 <span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="cOtM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="cOtD" class="md">÷31= ¥0</span></span></div>
-      <div class="ds">输入月度总额，自动按当月天数日摊</div>
-    </div>
+    <div class="cb2"><h3>垃圾处理费 <span class="mo-tag">月额→日摊</span></h3><div class="mo-row"><span class="ml">月额 <span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="cTrM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="cTrD" class="md">÷31= ¥0</span></span></div></div>
+    <div class="cb2"><h3>其他预付费 <span class="mo-tag">月额→日摊</span></h3><div class="mo-row"><span class="ml">月额 <span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="cOtM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="cOtD" class="md">÷31= ¥0</span></span></div></div>
   </div>
   <div class="tr"><label style="color:var(--cost)">每日直接成本合计（日元）· 6项</label><span class="tv" style="color:var(--cost)" id="cT">¥0</span></div>
 </div>
@@ -401,7 +224,6 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
     <div class="cb2"><h3>日摊固定成本 <span class="mo-tag">月额→日摊</span></h3>
       <div class="mo-row"><span class="ml">房租水电（月额）<span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="oRtM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oRtD" class="md">÷31= ¥0</span></span></div>
       <div class="mo-row"><span class="ml">折旧（月额）<span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="oDpM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oDpD" class="md">÷31= ¥0</span></span></div>
-      <div class="ds">月度总额，按当月天数自动日摊</div>
     </div>
     <div class="cb2"><h3>人力成本</h3>
       <div class="hg"><div class="hl"><span class="hd" style="background:var(--fc)"></span>正式员工（月薪含社保，÷30天）</div>
@@ -413,20 +235,16 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
         <div class="fr"><span class="fl">人数</span><span class="fv"><input type="text" class="mf" id="oPC" value="0" oninput="recalc()"></span></div>
         <div class="fr"><span class="fl">人均日薪</span><span class="fv"><input type="text" class="mf" id="oPS" value="0" oninput="recalc()"></span></div>
       </div>
-      <div class="fr" style="border-top:1px solid var(--bd);margin-top:4px;padding-top:10px;border-bottom:none"><span class="fl" style="font-weight:600">人力成本合计（日摊）</span><span class="fv" id="oST" style="font-weight:700;color:var(--op)">¥0</span></div>
+      <div class="fr" style="border-top:1px solid var(--bd);margin-top:4px;padding-top:10px;border-bottom:none"><span class="fl" style="font-weight:600">人力成本合计</span><span class="fv" id="oST" style="font-weight:700;color:var(--op)">¥0</span></div>
     </div>
   </div>
   <div class="cg" style="margin-top:14px">
-    <div class="cb2"><h3>媒体推广费 <span class="mo-tag">月额→日摊</span></h3>
-      <div class="mo-row"><span class="ml">小红书 / 社媒投放<span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="oMdM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oMdD" class="md">÷31= ¥0</span></span></div><div class="ds">月度投放预算，按当月天数日摊</div></div>
-    <div class="cb2"><h3>服务器费用 <span class="mo-tag">月额→日摊</span></h3>
-      <div class="mo-row"><span class="ml">云服务 / CDN / 托管<span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="oSvM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oSvD" class="md">÷31= ¥0</span></span></div><div class="ds">月度服务器账单，按当月天数日摊</div></div>
+    <div class="cb2"><h3>媒体推广费 <span class="mo-tag">月额→日摊</span></h3><div class="mo-row"><span class="ml">小红书 / 社媒投放</span><span class="mv"><input type="text" class="mf-mo" id="oMdM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oMdD" class="md">÷31= ¥0</span></span></div></div>
+    <div class="cb2"><h3>服务器费用 <span class="mo-tag">月额→日摊</span></h3><div class="mo-row"><span class="ml">云服务 / CDN / 托管</span><span class="mv"><input type="text" class="mf-mo" id="oSvM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oSvD" class="md">÷31= ¥0</span></span></div></div>
   </div>
   <div class="cg" style="margin-top:14px">
-    <div class="cb2"><h3>AI 使用费 <span class="mo-tag">月额→日摊</span></h3>
-      <div class="mo-row"><span class="ml">API / 订阅 / 工具<span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="oAIM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oAID" class="md">÷31= ¥0</span></span></div><div class="ds">月度AI订阅/API账单，按当月天数日摊</div></div>
-    <div class="cb2"><h3>日本本地杂费 <span class="mo-tag">月额→日摊</span></h3>
-      <div class="mo-row"><span class="ml">通讯 / 交通 / 办公<span class="ft ftm">手动</span></span><span class="mv"><input type="text" class="mf-mo" id="oMiM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oMiD" class="md">÷31= ¥0</span></span></div><div class="ds">月度杂费总额，按当月天数日摊</div></div>
+    <div class="cb2"><h3>AI 使用费 <span class="mo-tag">月额→日摊</span></h3><div class="mo-row"><span class="ml">API / 订阅 / 工具</span><span class="mv"><input type="text" class="mf-mo" id="oAIM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oAID" class="md">÷31= ¥0</span></span></div></div>
+    <div class="cb2"><h3>日本本地杂费 <span class="mo-tag">月额→日摊</span></h3><div class="mo-row"><span class="ml">通讯 / 交通 / 办公</span><span class="mv"><input type="text" class="mf-mo" id="oMiM" value="0" oninput="recalc()"><span style="color:var(--t3);font-size:11px">÷</span><span id="oMiD" class="md">÷31= ¥0</span></span></div></div>
   </div>
   <div class="tr"><label style="color:var(--op)">运营成本合计（日元）· 8项</label><span class="tv" style="color:var(--op)" id="oT">¥0</span></div>
 </div>
@@ -445,11 +263,11 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
   </div>
   <div class="fm">
     <h4>计算公式（单位：日元 JPY）</h4>
-    <div class="ff"><span class="f2 f2r">收入净额</span><span class="eq">=</span><span>购买手续费(净) + 物流服务费(净) + 包装费 + 增值服务费(净)</span></div>
-    <div class="ff"><span class="f2 f2f">平台手续费</span><span class="eq">=</span><span>煤炉(5%-20万/日) + 乐天二手(0.5%)</span></div>
-    <div class="ff"><span class="f2 f2x">汇差净额</span><span class="eq">=</span><span>充值汇差 - 退款汇差 - 提现汇差 - 第三方手续费</span></div>
+    <div class="ff"><span class="f2 f2r">收入净额</span><span class="eq">=</span><span>购买手续费(净)+物流服务费(净)+包装费+增值服务费(净)</span></div>
+    <div class="ff"><span class="f2 f2f">平台手续费</span><span class="eq">=</span><span>煤炉(5%-20万/日)+乐天二手(0.5%)</span></div>
+    <div class="ff"><span class="f2 f2x">汇差净额</span><span class="eq">=</span><span>充值汇差+订单付款汇差-原路退回汇差-提现汇差-第三方手续费</span></div>
     <div class="ff"><span class="f2 f2r">总收入</span><span class="eq">=</span><span class="f2 f2r">收入净额</span><span class="eq">-</span><span class="f2 f2f">平台手续费</span><span class="eq">+</span><span class="f2 f2x">汇差净额</span></div>
-    <div class="ff"><span class="f2 f2c">直接成本(6)</span><span class="eq">=</span><span>物流+耗材+平台+仓库损耗+(垃圾月额÷天数)+(其他月额÷天数)</span></div>
+    <div class="ff"><span class="f2 f2c">直接成本(6)</span><span class="eq">=</span><span>物流+耗材+平台+损耗+(垃圾÷天数)+(其他÷天数)</span></div>
     <div class="ff"><span class="f2 f2o">运营成本(8)</span><span class="eq">=</span><span>(房租÷天数)+(折旧÷天数)+人力+(推广÷天数)+(服务器÷天数)+(AI÷天数)+(杂费÷天数)</span></div>
     <div class="ff"><span class="f2 f2n">净利润</span><span class="eq">=</span><span class="f2 f2r">总收入</span><span class="eq">-</span><span class="f2 f2c">直接成本</span><span class="eq">-</span><span class="f2 f2o">运营成本</span></div>
   </div>
@@ -461,7 +279,6 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
   <button class="b2" onclick="resetAll()">清空重置</button>
   <button class="bs" onclick="saveRec()">保存今日记录</button>
 </div>
-
 <div class="p" style="animation-delay:.48s;margin-top:18px">
   <div class="ph"><h2>历史记录</h2></div>
   <table class="tb"><thead><tr><th>日期</th><th>收入净额</th><th>平台手续费</th><th>汇差净额</th><th>直接成本</th><th>毛利润</th><th>运营成本</th><th>净利润</th><th>净利率</th></tr></thead><tbody id="hist"></tbody></table>
@@ -469,48 +286,28 @@ select#qDate:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <script>
-// ════════ Theme Switcher ════════
-document.querySelectorAll('.swatch').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    var t=this.getAttribute('data-theme');
-    document.body.setAttribute('data-theme',t);
-    document.querySelectorAll('.swatch').forEach(function(b){b.classList.remove('active')});
-    this.classList.add('active');
-    localStorage.setItem('plt',t);
-  });
-});
-var saved=localStorage.getItem('plt');
-if(saved){document.body.setAttribute('data-theme',saved);document.querySelectorAll('.swatch').forEach(function(b){b.classList.remove('active');if(b.getAttribute('data-theme')===saved)b.classList.add('active');});}
+// Theme
+document.querySelectorAll('.swatch').forEach(function(btn){btn.addEventListener('click',function(){document.body.setAttribute('data-theme',this.getAttribute('data-theme'));document.querySelectorAll('.swatch').forEach(function(b){b.classList.remove('active')});this.classList.add('active');localStorage.setItem('plt',this.getAttribute('data-theme'));});});
+var saved=localStorage.getItem('plt');if(saved){document.body.setAttribute('data-theme',saved);document.querySelectorAll('.swatch').forEach(function(b){b.classList.remove('active');if(b.getAttribute('data-theme')===saved)b.classList.add('active');});}
 
-// ════════ Data ════════
-var CM={'日期':'date','订单手续费(原价)':'commission','手续费优惠券减免':'comm_coupon','购买手续费 净额':'__','【购买手续费 净额】':'__','支付手续费':'handling','煤炉订单数':'mercari_count','煤炉商品总额':'mercari_total','煤炉手续费(5%-20万/日)':'mercari_fee','乐天二手订单数':'rakuten_count','乐天二手商品总额':'rakuten_total','乐天二手手续费(0.5%)':'rakuten_fee','平台手续费合计':'platform_fee_total','【平台手续费合计】':'platform_fee_total','运费(原价)':'freight','物流手续费':'logi_comm','偏远附加':'remote','燃油附加':'fuel','补税费用':'tax_supp','运费优惠券':'freight_coupon','物流手续费优惠':'logi_coupon','物流折扣':'discount','物流服务费 净额':'__','【物流服务费 净额】':'__','包装费 净额':'package_fee','【包装费 净额】':'package_fee','订单增值服务(原价)':'order_vas','订单增值服务（原价）':'order_vas','订单增值退款':'vas_refund','订单增值(净)':'__','→ 订单增值(净)':'__','物流增值服务费':'logi_vas','保价费':'insurance','出口申报费':'declaration','增值服务费 净额':'__','【增值服务费 净额】':'__','优惠券减免合计':'__','充值日元(JPY)':'deposit_jpy','充值人民币(CNY)':'deposit_cny','退款至钱包日元':'refund_jpy','汇差-充值收入':'deposit_spread','汇差-退款扣减':'refund_spread','提现日元(JPY)':'withdraw_jpy','提现人民币(CNY)':'withdraw_cny','汇差-提现扣减':'withdraw_spread','汇差小计':'spread_subtotal','【汇差小计】':'spread_subtotal','第三方代收手续费(CNY)':'third_party_fee','汇差净额':'spread_net','【汇差净额】':'spread_net','每日收入净额':'__','【每日收入净额】':'__','每日收入原价':'__','【每日收入原价】':'__','订单数':'order_count','发货单数':'logistics_count'};
+// ★ COLUMN_MAP (updated: 4 FX flows)
+var CM={'日期':'date','订单手续费(原价)':'commission','手续费优惠券减免':'comm_coupon','购买手续费 净额':'__','【购买手续费 净额】':'__','支付手续费':'handling','煤炉订单数':'mercari_count','煤炉商品总额':'mercari_total','煤炉手续费(5%-20万/日)':'mercari_fee','乐天二手订单数':'rakuten_count','乐天二手商品总额':'rakuten_total','乐天二手手续费(0.5%)':'rakuten_fee','平台手续费合计':'platform_fee_total','【平台手续费合计】':'platform_fee_total','运费(原价)':'freight','物流手续费':'logi_comm','偏远附加':'remote','燃油附加':'fuel','补税费用':'tax_supp','运费优惠券':'freight_coupon','物流手续费优惠':'logi_coupon','物流折扣':'discount','物流服务费 净额':'__','【物流服务费 净额】':'__','包装费 净额':'package_fee','【包装费 净额】':'package_fee','订单增值服务(原价)':'order_vas','订单增值服务（原价）':'order_vas','订单增值退款':'vas_refund','订单增值(净)':'__','→ 订单增值(净)':'__','物流增值服务费':'logi_vas','保价费':'insurance','出口申报费':'declaration','增值服务费 净额':'__','【增值服务费 净额】':'__','优惠券减免合计':'__','充值日元(JPY)':'deposit_jpy','充值人民币(CNY)':'deposit_cny','汇差-充值收入':'deposit_spread','订单付款日元(JPY)':'order_pay_jpy','订单付款人民币(CNY)':'order_pay_cny','汇差-订单付款收入':'order_pay_spread','原路退回日元(JPY)':'refund_jpy','原路退回人民币(CNY)':'refund_cny','汇差-原路退回扣减':'refund_spread','提现日元(JPY)':'withdraw_jpy','提现人民币(CNY)':'withdraw_cny','汇差-提现扣减':'withdraw_spread','汇差小计':'spread_subtotal','【汇差小计】':'spread_subtotal','第三方代收手续费(CNY)':'third_party_fee','汇差净额':'spread_net','【汇差净额】':'spread_net','每日收入净额':'__','【每日收入净额】':'__','每日收入原价':'__','【每日收入原价】':'__','订单数':'order_count','发货单数':'logistics_count'};
 function mC(h){if(!h)return null;var s=String(h).trim();if(CM[s]!==undefined)return CM[s];var s2=s.replace(/【|】/g,'');if(CM[s2]!==undefined)return CM[s2];var s3=s.replace(/→\s*/g,'');if(CM[s3]!==undefined)return CM[s3];for(var k in CM){if(s.indexOf(k)!==-1||k.indexOf(s)!==-1)return CM[k];}return null;}
 
 var DS={};
-
 function showIP(){document.getElementById('iPnl').classList.remove('hidden');document.getElementById('btnLbl').textContent='导入 XLSX';document.getElementById('btnImp').classList.remove('re-show');}
-function hImp(e){var f=e.target.files[0];if(!f)return;document.getElementById('fInf').innerHTML='<span class="fn">'+f.name+'</span> ('+(f.size/1024).toFixed(1)+' KB)';document.getElementById('iSt').textContent='正在解析...';document.getElementById('iSt').className='ist';document.getElementById('iMp').innerHTML='';var r=new FileReader();r.onload=function(ev){try{var d=new Uint8Array(ev.target.result),wb=XLSX.read(d,{type:'array'}),sh=wb.Sheets[wb.SheetNames[0]],js=XLSX.utils.sheet_to_json(sh,{defval:''});if(!js.length){sE('XLSX 文件为空');return;}var hd=Object.keys(js[0]),mp={},mc=0,det=[];for(var i=0;i<hd.length;i++){var f2=mC(hd[i]);if(f2&&f2!=='__'){mp[hd[i]]=f2;mc++;det.push('<code>'+hd[i]+'</code> → '+f2);}else if(f2==='__'){det.push('<code>'+hd[i]+'</code> → 自动（跳过）');}else{det.push('<code>'+hd[i]+'</code> → 未匹配');}}document.getElementById('iMp').innerHTML='<strong>列头映射：</strong><br>'+det.join('<br>');if(mc<3){sE('匹配列太少（'+mc+'个）');return;}var c=0,dt=[];for(var r2=0;r2<js.length;r2++){var rw=js[r2],d2={commission:0,comm_coupon:0,handling:0,freight:0,logi_comm:0,remote:0,fuel:0,tax_supp:0,freight_coupon:0,logi_coupon:0,discount:0,package_fee:0,order_vas:0,vas_refund:0,logi_vas:0,insurance:0,declaration:0,order_count:0,logistics_count:0,mercari_count:0,mercari_total:0,mercari_fee:0,rakuten_count:0,rakuten_total:0,rakuten_fee:0,platform_fee_total:0,deposit_jpy:0,deposit_cny:0,refund_jpy:0,deposit_spread:0,refund_spread:0,withdraw_jpy:0,withdraw_cny:0,withdraw_spread:0,spread_subtotal:0,third_party_fee:0,spread_net:0},dv='';for(var h in mp){if(mp[h]==='date')dv=pD(rw[h]);else d2[mp[h]]=pn(rw[h])||0;}if(dv){DS[dv]=d2;c++;dt.push(dv);}}if(!c){sE('未能解析有效数据行');return;}
-      // ★ Build date select from imported dates
+function hImp(e){var f=e.target.files[0];if(!f)return;document.getElementById('fInf').innerHTML='<span class="fn">'+f.name+'</span> ('+(f.size/1024).toFixed(1)+' KB)';document.getElementById('iSt').textContent='正在解析...';document.getElementById('iSt').className='ist';document.getElementById('iMp').innerHTML='';var r=new FileReader();r.onload=function(ev){try{var d=new Uint8Array(ev.target.result),wb=XLSX.read(d,{type:'array'}),sh=wb.Sheets[wb.SheetNames[0]],js=XLSX.utils.sheet_to_json(sh,{defval:''});if(!js.length){sE('XLSX 文件为空');return;}var hd=Object.keys(js[0]),mp={},mc=0,det=[];for(var i=0;i<hd.length;i++){var f2=mC(hd[i]);if(f2&&f2!=='__'){mp[hd[i]]=f2;mc++;det.push('<code>'+hd[i]+'</code> → '+f2);}else if(f2==='__'){det.push('<code>'+hd[i]+'</code> → 自动（跳过）');}else{det.push('<code>'+hd[i]+'</code> → 未匹配');}}document.getElementById('iMp').innerHTML='<strong>列头映射：</strong><br>'+det.join('<br>');if(mc<3){sE('匹配列太少（'+mc+'个）');return;}var c=0,dt=[];for(var r2=0;r2<js.length;r2++){var rw=js[r2],d2={commission:0,comm_coupon:0,handling:0,freight:0,logi_comm:0,remote:0,fuel:0,tax_supp:0,freight_coupon:0,logi_coupon:0,discount:0,package_fee:0,order_vas:0,vas_refund:0,logi_vas:0,insurance:0,declaration:0,order_count:0,logistics_count:0,mercari_count:0,mercari_total:0,mercari_fee:0,rakuten_count:0,rakuten_total:0,rakuten_fee:0,platform_fee_total:0,deposit_jpy:0,deposit_cny:0,deposit_spread:0,order_pay_jpy:0,order_pay_cny:0,order_pay_spread:0,refund_jpy:0,refund_cny:0,refund_spread:0,withdraw_jpy:0,withdraw_cny:0,withdraw_spread:0,spread_subtotal:0,third_party_fee:0,spread_net:0},dv='';for(var h in mp){if(mp[h]==='date')dv=pD(rw[h]);else d2[mp[h]]=pn(rw[h])||0;}if(dv){DS[dv]=d2;c++;dt.push(dv);}}if(!c){sE('未能解析有效数据行');return;}
       var dateSet={};for(var j=0;j<dt.length;j++)dateSet[dt[j]]=1;
       var allDates=Object.keys(dateSet).sort().reverse();
       var sel=document.getElementById('qDate');sel.innerHTML='';sel.disabled=false;
       allDates.forEach(function(d){var o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);});
-      syncDB();
-      document.getElementById('sDot').className='sd im';
-      document.getElementById('sInfo').textContent='已导入 '+c+' 条 · '+allDates.length+' 天 · '+f.name;
-      document.getElementById('iPnl').classList.add('hidden');
-      document.getElementById('btnLbl').textContent='重新导入';
-      document.getElementById('btnImp').classList.add('re-show');
+      syncDB();document.getElementById('sDot').className='sd im';document.getElementById('sInfo').textContent='已导入 '+c+' 条 · '+allDates.length+' 天 · '+f.name;
+      document.getElementById('iPnl').classList.add('hidden');document.getElementById('btnLbl').textContent='重新导入';document.getElementById('btnImp').classList.add('re-show');
     }catch(err){sE('解析失败: '+err.message);}};r.readAsArrayBuffer(f);e.target.value='';}
 function sE(m){document.getElementById('iSt').textContent=m;document.getElementById('iSt').className='ist er';}
 function pD(v){if(!v)return'';if(typeof v==='number'){var d=new Date((v-25569)*86400*1000);return d.toISOString().split('T')[0];}var s=String(v).trim().replace(/\//g,'-');if(/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)){var p=s.split('-');return p[0]+'-'+(p[1].length<2?'0':'')+p[1]+'-'+(p[2].length<2?'0':'')+p[2];}if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.substring(0,10);var d=new Date(s);if(!isNaN(d.getTime()))return d.toISOString().split('T')[0];return s;}
 
-function getDataDays(){
-  var selDate=document.getElementById('qDate').value;
-  if(!selDate)return 31;
-  var p=selDate.split('-');
-  return new Date(parseInt(p[0]),parseInt(p[1]),0).getDate();
-}
+function getDataDays(){var v=document.getElementById('qDate').value;if(!v)return 31;var p=v.split('-');return new Date(parseInt(p[0]),parseInt(p[1]),0).getDate();}
 
 var rd={},_c={};
 function syncDB(){var d=document.getElementById('qDate').value;if(!d)return;var data=DS[d];if(!data){document.getElementById('sDot').className='sd';document.getElementById('sInfo').textContent=d+' 暂无数据';clr();return;}rd=data;fR();recalc();}
@@ -533,8 +330,10 @@ function fR(){
   sv('rO',rg);
   document.getElementById('pfMC').textContent=n(rd.mercari_count||0);sv('pfMT',rd.mercari_total||0);sv('pfMF',rd.mercari_fee||0);
   document.getElementById('pfRC').textContent=n(rd.rakuten_count||0);sv('pfRT',rd.rakuten_total||0);sv('pfRF',rd.rakuten_fee||0);sv('pfTT',rd.platform_fee_total||0,1);
+  // ★ FX 4 flows
   sv('fxDSp',rd.deposit_spread||0);document.getElementById('fxDJpy').textContent='JPY '+fc(rd.deposit_jpy||0);document.getElementById('fxDCny').textContent='CNY '+fc(rd.deposit_cny||0);
-  sv('fxRSp',rd.refund_spread||0,1);document.getElementById('fxRJpy').textContent='JPY '+fc(rd.refund_jpy||0);
+  sv('fxOSp',rd.order_pay_spread||0);document.getElementById('fxOJpy').textContent='JPY '+fc(rd.order_pay_jpy||0);document.getElementById('fxOCny').textContent='CNY '+fc(rd.order_pay_cny||0);
+  sv('fxRSp',rd.refund_spread||0,1);document.getElementById('fxRJpy').textContent='JPY '+fc(rd.refund_jpy||0);document.getElementById('fxRCny').textContent='CNY '+fc(rd.refund_cny||0);
   sv('fxWSp',rd.withdraw_spread||0,1);document.getElementById('fxWJpy').textContent='JPY '+fc(rd.withdraw_jpy||0);document.getElementById('fxWCny').textContent='CNY '+fc(rd.withdraw_cny||0);
   sv('fxSub',rd.spread_subtotal||0);sv('fx3rd',rd.third_party_fee||0,1);sv('fxNet',rd.spread_net||0);
   rSt([{l:'物流服务费',v:ln,c:'#00d4aa'},{l:'购买手续费',v:pn2,c:'#00b894'},{l:'包装费',v:rd.package_fee||0,c:'#55efc4'},{l:'增值服务费',v:vn,c:'#81ecec'},{l:'汇差净额',v:Math.max(0,rd.spread_net||0),c:'#ffd93d'}],pn2+ln+(rd.package_fee||0)+vn+Math.max(0,rd.spread_net||0));
@@ -546,8 +345,7 @@ function recalc(){
   if(!rd.commission&&rd.commission!==0&&!rd.freight&&rd.freight!==0)return;
   var days=getDataDays();
   document.getElementById('daysLabel').textContent='当月天数: '+days+' 天';
-  var moFields=[{inp:'cTrM',disp:'cTrD'},{inp:'cOtM',disp:'cOtD'},{inp:'oRtM',disp:'oRtD'},{inp:'oDpM',disp:'oDpD'},{inp:'oMdM',disp:'oMdD'},{inp:'oSvM',disp:'oSvD'},{inp:'oAIM',disp:'oAID'},{inp:'oMiM',disp:'oMiD'}];
-  moFields.forEach(function(f){var v=pn(document.getElementById(f.inp).value)||0;document.getElementById(f.disp).textContent='÷'+days+'= '+fc(v/days);});
+  [{inp:'cTrM',disp:'cTrD'},{inp:'cOtM',disp:'cOtD'},{inp:'oRtM',disp:'oRtD'},{inp:'oDpM',disp:'oDpD'},{inp:'oMdM',disp:'oMdD'},{inp:'oSvM',disp:'oSvD'},{inp:'oAIM',disp:'oAID'},{inp:'oMiM',disp:'oMiD'}].forEach(function(f){var v=pn(document.getElementById(f.inp).value)||0;document.getElementById(f.disp).textContent='÷'+days+'= '+fc(v/days);});
   var pn2=(rd.commission||0)-(rd.comm_coupon||0)+(rd.handling||0);
   var ln=(rd.freight||0)+(rd.logi_comm||0)+(rd.remote||0)+(rd.fuel||0)+(rd.tax_supp||0)-(rd.freight_coupon||0)-(rd.logi_coupon||0)-(rd.discount||0);
   var vn=(rd.order_vas||0)-(rd.vas_refund||0)+(rd.logi_vas||0)+(rd.insurance||0)+(rd.declaration||0);
@@ -573,15 +371,13 @@ function recalc(){
   document.getElementById('pV').textContent=nr.toFixed(1)+'%';document.getElementById('pV').style.color=net>=0?'var(--net)':'var(--neg)';
   _c={rn:revNet,pf:pfT,fx:fxN,dc:dc,oc:oc,g:g,net:net,gr:gr,nr:nr};
 }
-
 function rSt(segs,tot){var bar=document.getElementById('stB'),tk=document.getElementById('stK'),lg=document.getElementById('stL');if(tot<=0){bar.style.display='none';return;}bar.style.display='block';document.getElementById('stT').textContent=fc(tot);tk.innerHTML='';lg.innerHTML='';for(var i=0;i<segs.length;i++){var s=segs[i],p=s.v/tot*100;if(p<0.3)continue;var el=document.createElement('div');el.className='sg';el.style.width=p+'%';el.style.background=s.c;el.title=s.l+': '+fc(s.v)+' ('+p.toFixed(1)+'%)';tk.appendChild(el);lg.innerHTML+='<div class="si"><div class="sd2" style="background:'+s.c+'"></div>'+s.l+' '+fc(s.v)+' ('+p.toFixed(1)+'%)</div>';}}
 
-var hist=JSON.parse(localStorage.getItem('dailyPL14')||'[]');rH();
-function saveRec(){if(!_c.rn&&_c.rn!==0){alert('请先导入数据');return;}var d=document.getElementById('qDate').value;hist=hist.filter(function(h){return h.date!==d});hist.unshift({date:d,rn:_c.rn,pf:_c.pf,fx:_c.fx,dc:_c.dc,g:_c.g,oc:_c.oc,net:_c.net,nr:_c.nr,days:getDataDays()});hist.sort(function(a,b){return b.date.localeCompare(a.date)});localStorage.setItem('dailyPL14',JSON.stringify(hist));rH();}
+var hist=JSON.parse(localStorage.getItem('dailyPL15')||'[]');rH();
+function saveRec(){if(!_c.rn&&_c.rn!==0){alert('请先导入数据');return;}var d=document.getElementById('qDate').value;hist=hist.filter(function(h){return h.date!==d});hist.unshift({date:d,rn:_c.rn,pf:_c.pf,fx:_c.fx,dc:_c.dc,g:_c.g,oc:_c.oc,net:_c.net,nr:_c.nr,days:getDataDays()});hist.sort(function(a,b){return b.date.localeCompare(a.date)});localStorage.setItem('dailyPL15',JSON.stringify(hist));rH();}
 function rH(){var tb=document.getElementById('hist');if(!hist.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:24px">暂无历史记录</td></tr>';return;}tb.innerHTML=hist.map(function(h){return '<tr><td>'+h.date+'</td><td class="pv">'+fc(h.rn)+'</td><td style="color:var(--pf-clr)">-'+fc(h.pf||0)+'</td><td style="color:var(--fx)">'+fc(h.fx||0)+'</td><td class="nv">'+fc(h.dc)+'</td><td class="'+(h.g>=0?'pv':'nv')+'">'+fc(h.g)+'</td><td class="nv">'+fc(h.oc)+'</td><td class="'+(h.net>=0?'pv':'nv')+'" style="font-weight:700">'+fc(h.net)+'</td><td style="color:'+(h.nr>=0?'var(--net)':'var(--neg)')+'">'+h.nr.toFixed(1)+'%</td></tr>';}).join('');}
 function resetAll(){if(!confirm('确定清空所有手动输入？'))return;document.querySelectorAll('.mf').forEach(function(el){el.value='0';});document.querySelectorAll('.mf-mo').forEach(function(el){el.value='0';});recalc();}
 function expCSV(){if(!hist.length){alert('暂无记录');return;}var h='日期,收入净额,平台手续费,汇差净额,直接成本,毛利润,运营成本,净利润,净利率,当月天数\n';var r=hist.map(function(x){return [x.date,x.rn,x.pf||0,x.fx||0,x.dc,x.g,x.oc,x.net,x.nr.toFixed(1)+'%',x.days||''].join(',');}).join('\n');var b=new Blob(['\uFEFF'+h+r],{type:'text/csv;charset=utf-8;'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='pl_'+new Date().toISOString().split('T')[0]+'.csv';a.click();}
-
 function pn(s){var v=parseFloat(String(s).replace(/[^0-9.\-]/g,''));return isNaN(v)?null:v;}
 function f(n){return Math.abs(n).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fc(n){return(n<0?'-':'')+'\u00a5'+f(n);}
@@ -590,7 +386,6 @@ function sv(id,v,neg){var el=document.getElementById(id);if(!el)return;neg?el.te
 function sw(id,v,c){var el=document.getElementById(id);el.textContent=fc(v);el.style.color=v>=0?c:'var(--neg)';}
 function ss(id,v,p,neg){var el=document.getElementById(id);el.textContent=fc(v);el.style.color=v>=0?p:neg;}
 function tz(id,v){var el=document.getElementById(id);if(!el)return;if(!v||v===0)el.classList.add('fz');else el.classList.remove('fz');}
-
 document.getElementById('qDate').addEventListener('change',function(){syncDB();});
 </script>
 </body>
